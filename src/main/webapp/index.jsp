@@ -148,6 +148,8 @@ body {
 			</div>
 		</div>
 	</div>
+	<br/>
+	<a style="text-decoration:none" href="SendOTPServlet"><font color="#45a049"><b>Send SMS</b></font> </a>
 
 </body>
 </html>
