@@ -1,16 +1,13 @@
 package sms;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hamcrest.MatcherAssert;
 import org.json.simple.JSONObject;
 
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 
 
 public class SendSMS {

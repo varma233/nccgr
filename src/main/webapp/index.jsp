@@ -137,8 +137,13 @@ body {
 			</div>
 
 		</form>
+		<div class="row">
+			<div class="col-75 signup">
+				<a style="text-decoration:none" href="forgotpassword.jsp"><font color="#45a049">Forgot Password?</font></a>
+			</div>
+		</div>
 
-		<br /> <br />
+		<br />
 		<div class="row">
 			<div class="col-25">
 				<label for="signup">New User?</label>
@@ -147,8 +152,8 @@ body {
 				<a style="text-decoration:none" href="signup.jsp"><font color="#45a049"><b>Sign Up</b></font> </a> <label> here</label>
 			</div>
 		</div>
+		
 	</div>
-<br/>
-<a  href="SendOTPServlet"> SMS </a>
+
 </body>
 </html>

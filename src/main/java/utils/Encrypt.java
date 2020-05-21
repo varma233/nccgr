@@ -1,4 +1,4 @@
-package encryption;
+package utils;
 
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;

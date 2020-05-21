@@ -1,4 +1,4 @@
-package servlet;
+package servlet.authentication;
 
 import java.io.IOException;
 

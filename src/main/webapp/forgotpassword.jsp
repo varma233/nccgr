@@ -149,6 +149,9 @@ body {
 	<div class="container">
 		<form name="input" action="ForgotPasswordServlet" method="post">
 			
+			<%	if ((String) request.getAttribute("PasswordResetStatus") == "failure") 
+					out.print("<center><label><font color=\"red\">Unable to send OTP. Please check mobilenumber & try again...</font></label></center>");
+			%>
 			<br />
 			
 			<br /> <img src="images/NCC.jpg" alt="NCC" class="responsiveimg"
@@ -168,7 +171,7 @@ body {
 			
 			<br />
 			<div class="row">
-				<input type="submit" value="Change Password">
+				<input type="submit" value="Get Password">
 			</div>
 		</form>
 	</div>

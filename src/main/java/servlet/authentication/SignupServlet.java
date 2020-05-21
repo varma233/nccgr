@@ -1,4 +1,4 @@
-package servlet;
+package servlet.authentication;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import encryption.Encrypt;
+import utils.Encrypt;
 
 //@WebServlet(name = "SignupServlet", urlPatterns = { "/SignupServlet" })
 public class SignupServlet extends HttpServlet {
