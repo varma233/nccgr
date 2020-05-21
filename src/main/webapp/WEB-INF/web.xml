@@ -52,8 +52,8 @@
 		<servlet-class>servlet.GenerateKeyServlet</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>SendOTPServlet</servlet-name>
-		<display-name>SendOTPServlet</display-name>
+		<servlet-name>ForgotPasswordServlet</servlet-name>
+		<display-name>ForgotPasswordServlet</display-name>
 		<description></description>
 		<servlet-class>servlet.authentication.ForgotPasswordServlet</servlet-class>
 	</servlet>
@@ -91,6 +91,7 @@
 	</servlet-mapping>
 
 	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
