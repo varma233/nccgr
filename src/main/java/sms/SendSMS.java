@@ -25,15 +25,12 @@ public class SendSMS {
 		request.toJSONString();
 
 		Response response = 
-				given()
-					.baseUri(System.getenv("TILL_URL"))
-					.contentType(ContentType.JSON)
-					.accept(ContentType.JSON)
-					.header("Content-Type", "application/json; charset=UTF-8")
+				given()			
 					.body(request)
+					.contentType(ContentType.JSON)
+					.header("Content-Type", "application/json")
 					.log().all()
-				.when()
-					.post();
+					.post(System.getenv("TILL_URL"));
 		
 		System.out.println(response);
 		
