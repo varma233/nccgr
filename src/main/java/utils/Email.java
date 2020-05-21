@@ -2,10 +2,19 @@ package utils;
 
 import static io.restassured.RestAssured.given;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.simple.JSONObject;
+
 public class Email {
 	// EXAMPLES : https://documentation.mailgun.com/en/latest/api-sending.html#examples
 	
 	public static void send(String to, String password) throws Exception {
+		
+		JSONObject request = new JSONObject();
+		request.put("password",password);
+		request.toJSONString();
 		
 		given()
 			.baseUri("https://api.mailgun.net/v3/"+System.getenv("MAILGUN_DOMAIN"))
@@ -15,7 +24,7 @@ public class Email {
 			.queryParam("subject", "Test  Mail") // hard coded
 //			.queryParam("text", "Test Message")
 			.queryParam("template", "newpassword")
-			.queryParam("h:X-Mailgun-Variables", "{\"password\": \""+password+"\"}")
+			.queryParam("h:X-Mailgun-Variables", request)
 			
 			.log().all()
 			.post("/messages").
