@@ -25,7 +25,7 @@ public class Email {
 //			.queryParam("text", "Test Message")
 			.queryParam("template", "newpassword")
 			.queryParam("o:tracking", "False")
-			.queryParam("v.insertpassword", password)
+			.queryParam("v:insertpassword", password)
 //			.queryParam("h:X-Mailgun-Variables", request)
 			
 			.log().all()
