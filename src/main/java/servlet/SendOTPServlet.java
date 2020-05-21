@@ -39,7 +39,8 @@ public class SendOTPServlet extends HttpServlet {
 //        }
 
 		try {
-			SendSMS.send();
+			SendSMS.send("+918939517189", "112233 : Use this OTP for resetting your password ");
+			out.print("<h2> <font color=green> OTP sent succesfully</font><h2>");
 		} catch (Exception e) {
 			System.out.println(e.toString());
 			out.print("<h2> <font color=red> " + e.toString() + "</font><h2>");

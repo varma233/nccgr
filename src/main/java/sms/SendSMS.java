@@ -15,26 +15,26 @@ import io.restassured.response.Response;
 
 public class SendSMS {
 
-	public static void send() throws Exception {
+	public static void send(String mobilenumber, String message) throws Exception {
 
 		JSONObject request = new JSONObject();
 		List<String> phonenumbers = new ArrayList<String>();
-		phonenumbers.add("+918939517189");
+		phonenumbers.add(mobilenumber);
 		request.put("phone", phonenumbers);
-		request.put("text", "Hi...\nYour OTP is : 123456");
+		request.put("text", message);
 		request.toJSONString();
 
-		Response response = 
-				given()			
-					.body(request)
-					.contentType(ContentType.JSON)
-					.header("Content-Type", "application/json")
-					.log().all()
-					.post(System.getenv("TILL_URL"));
+		given()			
+			.body(request)
+			.contentType(ContentType.JSON)
+			.header("Content-Type", "application/json")
+			.log().all()
+			.post(System.getenv("TILL_URL")).
+		then()
+			.statusCode(200);
 		
-		System.out.println(response);
 		
-		MatcherAssert.assertThat(response.statusCode(), equalTo(201));
+//		MatcherAssert.assertThat(response.statusCode(), equalTo(200));
 
 	}
 
