@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sms.SendSMS;
 import utils.Encrypt;
 import utils.Util;
+import utils.sms.SendSMS;
 
 public class ForgotPasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -70,14 +70,23 @@ public class ForgotPasswordServlet extends HttpServlet {
 			System.out.println(count);
 
 			if (count > 0) {
+
 				try {
 					SendSMS.send("+91" + mobile, "Your new password is:\n" + newPassword);
 
 					request.setAttribute("PasswordResetStatus", "success");
 					out.println("<script type=\"text/javascript\">");
-					out.println("alert('Login with new password sent to your mobile "+mobile+"');");
+					out.println("alert('Please login with new password sent to your mobile " + mobile + "');");
 					out.println("location='index.jsp';");
 					out.println("</script>");
+
+					try {
+						utils.Email.send();
+						System.out.println("Email sent succesfully");
+					} catch (Exception e) {
+						System.out.println("Unable to send email");
+						System.out.println(e.toString());					
+					}
 
 				} catch (Exception e) {
 					System.out.println(e.toString());

@@ -1,4 +1,4 @@
-package sms;
+package utils.sms;
 
 import static io.restassured.RestAssured.given;
 
