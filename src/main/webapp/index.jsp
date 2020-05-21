@@ -148,6 +148,7 @@ body {
 			</div>
 		</div>
 	</div>
-
+<br/>
+<a  href="SendOTPServlet"> SMS </a>
 </body>
 </html>
