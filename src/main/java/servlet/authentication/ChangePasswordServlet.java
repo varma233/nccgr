@@ -103,13 +103,6 @@ public class ChangePasswordServlet extends HttpServlet {
 						out.println("</script>");
 					}
 				}
-//				} else {
-//					System.out.println("RS = 0");
-//					out.println("<script type=\"text/javascript\">");
-//					out.println("alert('Wrong Mobile Number. Please verify... !');");
-//					out.println("location='index.jsp';");
-//					out.println("</script>");
-//				}
 
 			}
 		} catch (Exception e2) {
