@@ -19,12 +19,10 @@ input, select, textarea {
 	resize: vertical;
 }
 
-label, .signup {
+label {
 	padding: 12px 12px 12px 0;
 	display: inline-block;
 }
-
-
 
 input[type=submit] {
 	background-color: #4CAF50;
@@ -86,67 +84,93 @@ body {
 	margin: 0;
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+/**
+.topnav {
+	overflow: hidden;
+	background-color: #333;
+}
+
+.topnav a {
+	float: left;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.topnav a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.topnav a.active {
+	background-color: #4CAF50;
+	color: white;
+}
+
+.topnav .icon {
+	display: none;
+}
+
+@media screen and (max-width: 600px) {
+	.topnav a:not (:first-child ) {
+		display: none;
+	}
+	.topnav a.icon {
+		float: right;
+		display: block;
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.topnav.responsive {
+		position: relative;
+	}
+	.topnav.responsive .icon {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+	.topnav.responsive a {
+		float: none;
+		display: block;
+		text-align: left;
+	}
+}**/
 </style>
 
-<%
-    String mobile = (String) session.getAttribute("mobile");
-    if (mobile != null && mobile.length() != 0) {
-    	response.sendRedirect("home.jsp");
-    }
- %>
 </head>
 <body>
 
 
 	<div class="container">
-		<form name="input" action="LoginServlet" method="post">
-
-			<br/>
+		<form name="input" action="ForgotPasswordServlet" method="post">
 			
-			<%	if ((String) request.getAttribute("registrationstatus") == "success") 
-					out.print("<center><label><font color=\"green\">Registration Successful !</font></label></center>");
-			%>
-
+			<br />
+			
 			<br /> <img src="images/NCC.jpg" alt="NCC" class="responsiveimg"
 				width="200" height="100"> <br />
+
 
 			<div class="row">
 				<div class="col-25">
 					<label for="mobile">Mobile Number</label>
 				</div>
 				<div class="col-75">
-					<input type="tel" id="mobile" name="mobile"
-						placeholder="Mobile number.." required>
+					<input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}"
+						title="Must contain only 10 numbers" placeholder="Enter your mobile number.."
+						required>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-25">
-					<label for="password">Password</label>
-				</div>
-				<div class="col-75">
-					<input type="password" id="password" name="password"
-						placeholder="Password.." required>
-				</div>
-			</div>
-
+			
 			<br />
-
 			<div class="row">
-				<input type="submit" value="Sign In">
+				<input type="submit" value="Change Password">
 			</div>
-
 		</form>
-
-		<br /> <br />
-		<div class="row">
-			<div class="col-25">
-				<label for="signup">New User?</label>
-			</div>
-			<div class="col-75 signup">
-				<a style="text-decoration:none" href="signup.jsp"><font color="#45a049"><b>Sign Up</b></font> </a> <label> here</label>
-			</div>
-		</div>
 	</div>
 
 </body>
