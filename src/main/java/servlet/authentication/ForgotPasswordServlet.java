@@ -74,12 +74,6 @@ public class ForgotPasswordServlet extends HttpServlet {
 				try {
 					SendSMS.send("+91" + mobile, "Your new password is:\n" + newPassword);
 
-					request.setAttribute("PasswordResetStatus", "success");
-					out.println("<script type=\"text/javascript\">");
-					out.println("alert('Please login with new password sent to your mobile " + mobile + "');");
-					out.println("location='index.jsp';");
-					out.println("</script>");
-
 					try {
 						utils.Email.send();
 						System.out.println("Email sent succesfully");
@@ -87,6 +81,14 @@ public class ForgotPasswordServlet extends HttpServlet {
 						System.out.println("Unable to send email");
 						System.out.println(e.toString());					
 					}
+					
+					request.setAttribute("PasswordResetStatus", "success");
+					out.println("<script type=\"text/javascript\">");
+					out.println("alert('Please login with new password sent to your mobile " + mobile + "');");
+					out.println("location='index.jsp';");
+					out.println("</script>");
+
+					
 
 				} catch (Exception e) {
 					System.out.println(e.toString());
