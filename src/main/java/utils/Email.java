@@ -8,7 +8,7 @@ public class Email {
 		given().
 			baseUri("https://api.mailgun.net/v3/"+System.getenv("MAILGUN_DOMAIN")).
 			auth().basic("api", System.getenv("MAILGUN_API_KEY")).
-			queryParam("from", System.getenv("MAILGUN_SMTP_LOGIN")).
+			queryParam("from", "Password Recovery <"+System.getenv("MAILGUN_SMTP_LOGIN")+">").
 			queryParam("to", "naveenkakarlapudi@gmail.com").
 			queryParam("subject", "Test  Mail").
 			queryParam("text", "Test Message")
