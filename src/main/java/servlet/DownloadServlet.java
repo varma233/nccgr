@@ -2,9 +2,7 @@ package servlet;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
@@ -20,6 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import utils.DBUtil;
 
 public class DownloadServlet extends HttpServlet {
 
@@ -53,28 +53,9 @@ public class DownloadServlet extends HttpServlet {
 		System.out.println("Inside DownloadServlet...");
 
 		try {
-			Class.forName("org.postgresql.Driver");
-
-			String DATABASE_URL = System.getenv("DATABASE_URL");
-
-			if (DATABASE_URL == null)
-				DATABASE_URL = getServletContext().getInitParameter("DATABASE_URL");
-
-			URI dbUri = new URI(DATABASE_URL);
-
-			dbUsername = dbUri.getUserInfo().split(":")[0];
-			dbPassword = dbUri.getUserInfo().split(":")[1];
-			dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
-					+ "?sslmode=require";
-
-			con = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
-
+			con = DBUtil.getConnection();
 			statement = con.createStatement();
-			
-//			String sql = "SELECT ID, NAME, CITY, LOCATION, CREATED_AT :: TIMESTAMP AT TIME ZONE 'Asia/Kolkata' AS \"CREATED_AT\", CREATED_BY "
-//					+ "  FROM SVVGR ORDER BY CREATED_AT DESC;";
 			String sql = "SELECT ID, NAME, CITY, LOCATION, CREATED_AT, CREATED_BY FROM SVVGR ORDER BY CREATED_AT DESC;";
-			
 			
 			resultSet = statement.executeQuery(sql);
 
@@ -177,7 +158,6 @@ public class DownloadServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//doGet(request, response);
 		response.sendRedirect("index.jsp");
 	}
 

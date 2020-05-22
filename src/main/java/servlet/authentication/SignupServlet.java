@@ -2,9 +2,7 @@ package servlet.authentication;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,16 +12,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import utils.DBUtil;
 import utils.Encrypt;
 
-//@WebServlet(name = "SignupServlet", urlPatterns = { "/SignupServlet" })
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection con;
-	String dbURL;
-	String dbUsername;
-	String dbPassword;
-
+	private PreparedStatement ps;
+	private ResultSet rs;
+	
 	public SignupServlet() {
 		super();
 	}
@@ -47,30 +44,12 @@ public class SignupServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String authkey = request.getParameter("authkey");
 
-		/**
-		 * input validations
-		 * 
-		 * TODO
-		 * 
-		 **/
-
 		try {
-			Class.forName("org.postgresql.Driver");
-			String DATABASE_URL = System.getenv("DATABASE_URL");
-
-			if (DATABASE_URL == null)
-				DATABASE_URL = getServletContext().getInitParameter("DATABASE_URL");
-
-			URI dbUri = new URI(DATABASE_URL);
-			dbUsername = dbUri.getUserInfo().split(":")[0];
-			dbPassword = dbUri.getUserInfo().split(":")[1];
-			dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
-					+ "?sslmode=require";
-			con = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+			con = DBUtil.getConnection();
 			String sql = "select * from auth_keys where key = ?";
-			PreparedStatement ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 			ps.setString(1, authkey);
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 
 			if (!rs.next()) {
 				request.setAttribute("registrationstatus", "failure");
@@ -111,12 +90,16 @@ public class SignupServlet extends HttpServlet {
 			request.getRequestDispatcher("signup.jsp").forward(request, response);
 			System.out.println(e2);
 		} finally {
-			if (con != null)
-				try {
+			try {
+				if (rs != null)
+					rs.close();
+				if(ps!=null)
+					ps.close();				
+				if (con != null)
 					con.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		}
 
 		out.close();

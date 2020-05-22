@@ -2,9 +2,7 @@ package servlet.authentication;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.URI;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,16 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import utils.DBUtil;
 import utils.Encrypt;
 
 public class ChangePasswordServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Connection con;
-	String dbURL;
-	String dbUsername; 
-	String dbPassword;
-	ResultSet rs;
-	PreparedStatement ps;
+	private PreparedStatement ps;
+	private ResultSet rs;
 
 	public ChangePasswordServlet() {
 		super();
@@ -58,22 +54,8 @@ public class ChangePasswordServlet extends HttpServlet {
 				out.println("location='index.jsp';");
 				out.println("</script>");
 			} else {
-
-				Class.forName("org.postgresql.Driver");
-
-				String DATABASE_URL = System.getenv("DATABASE_URL");
-
-				if (DATABASE_URL == null)
-					DATABASE_URL = getServletContext().getInitParameter("DATABASE_URL");
-
-				URI dbUri = new URI(DATABASE_URL);
-
-				dbUsername = dbUri.getUserInfo().split(":")[0];
-				dbPassword = dbUri.getUserInfo().split(":")[1];
-				dbURL = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath()
-						+ "?sslmode=require";
-
-				con = DriverManager.getConnection(dbURL, dbUsername, dbPassword);
+				con = DBUtil.getConnection();
+				
 				String sql = "SELECT PASSWORD FROM USERS WHERE MOBILE_NUMBER = ?";
 				ps = con.prepareStatement(sql);
 				ps.setString(1, mobile);
@@ -110,13 +92,12 @@ public class ChangePasswordServlet extends HttpServlet {
 			System.out.println(e2);
 		} finally {
 			try {
+				if (rs != null)
+					rs.close();	
 				
 				if(ps!=null)
 					ps.close();
 				
-				if (rs != null)
-					rs.close();
-
 				if (con != null)
 					con.close();
 			} catch (SQLException e1) {
