@@ -67,12 +67,11 @@ public class ForgotPasswordServlet extends HttpServlet {
 					if (SMS.send("+91" + mobile, "Your new password is:\n" + newPassword)) {
 
 						if (!utils.Email.send(email, newPassword)) {
-							System.out.println("Unable to sent emial to " + email);
+							System.out.println("Unable to sent email to " + email);
 						}
-						System.out.println("Email sent succesfully");
 						request.setAttribute("PasswordResetStatus", "success");
 						out.println("<script type=\"text/javascript\">");
-						out.println("alert('Please login with new password sent to your mobile/email);");
+						out.println("alert('Please login with new password sent to your mobile/email');");
 						out.println("location='index.jsp';");
 						out.println("</script>");
 
