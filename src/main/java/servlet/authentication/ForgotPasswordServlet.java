@@ -66,7 +66,7 @@ public class ForgotPasswordServlet extends HttpServlet {
 						SMS.send("+91" + mobile, "Your new password is:\n" + newPassword);
 
 						try {
-							utils.Email.send(email, newPassword);
+							utils.Email.send(email, "Your new password is : " + newPassword);
 							System.out.println("Email sent succesfully");
 						} catch (Exception e) {
 							System.out.println("Unable to send email");
