@@ -16,9 +16,9 @@ public class Email {
 		given()
 			.baseUri("https://api.mailgun.net/v3/"+System.getenv("MAILGUN_DOMAIN"))
 			.auth().basic("api", System.getenv("MAILGUN_API_KEY"))
-			.queryParam("from", "Account Details <"+System.getenv("MAILGUN_SMTP_LOGIN")+">")
+			.queryParam("from", "NCCGR <"+System.getenv("MAILGUN_SMTP_LOGIN")+">")
 			.queryParam("to", to) 
-			.queryParam("subject", "Test  Mail")
+			.queryParam("subject", "Login Details")
 			.queryParam("html", html)			
 			.log().all()
 			.post("/messages");
