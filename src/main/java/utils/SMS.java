@@ -10,10 +10,11 @@ import java.util.Map;
 import org.json.simple.JSONValue;
 
 import io.restassured.http.ContentType;
+import io.restassured.response.Response;
 
 public class SMS {
 
-	public static void send(String mobilenumber, String message) throws Exception {
+	public static boolean send(String mobilenumber, String message)  {
 
 		List<String> phonenumbers = new ArrayList<String>();
 		phonenumbers.add(mobilenumber);
@@ -22,10 +23,18 @@ public class SMS {
 		obj.put("phone", phonenumbers);
 		obj.put("text", message);
 		String request = JSONValue.toJSONString(obj);
-
+		
+		try {
+		Response response = 
 		given().body(request).contentType(ContentType.JSON).header("Content-Type", "application/json").log().all()
-				.post(System.getenv("TILL_URL")).then().statusCode(200);
-
+				.post(System.getenv("TILL_URL"));
+		if(response.statusCode() == 200)
+			return true;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		
+		return false;
 	}
 
 }

@@ -52,6 +52,8 @@ public class ForgotPasswordServlet extends HttpServlet {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				String email = rs.getString(1);
+				
+				System.out.println("Email ID =");
 
 				ps = con.prepareStatement("UPDATE USERS SET PASSWORD = ? WHERE MOBILE_NUMBER= ? ;");
 				ps.setString(1, Encrypt.generateStorngPasswordHash(newPassword));
@@ -62,25 +64,20 @@ public class ForgotPasswordServlet extends HttpServlet {
 
 				if (count > 0) {
 
-					try {
-						SMS.send("+91" + mobile, "Your new password is:\n" + newPassword);
+					if(SMS.send("+91" + mobile, "Your new password is:\n" + newPassword)) {
 
-						try {
-							utils.Email.send(email, "Your new password is : " + newPassword);
+						if (utils.Email.send(email, newPassword)) {
 							System.out.println("Email sent succesfully");
-						} catch (Exception e) {
+							request.setAttribute("PasswordResetStatus", "success");
+							out.println("<script type=\"text/javascript\">");
+							out.println("alert('Please login with new password sent to your mobile/email);");
+							out.println("location='index.jsp';");
+							out.println("</script>");
+						} else {
 							System.out.println("Unable to send email");
-							System.out.println(e.toString());
-						}
+						}					
 
-						request.setAttribute("PasswordResetStatus", "success");
-						out.println("<script type=\"text/javascript\">");
-						out.println("alert('Please login with new password sent to your mobile/email);");
-						out.println("location='index.jsp';");
-						out.println("</script>");
-
-					} catch (Exception e) {
-						System.out.println(e.toString());
+					} else {
 						request.setAttribute("PasswordResetStatus", "failure");
 						request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
 					}
